@@ -1,0 +1,28 @@
+{
+  "name": "ecommerce-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node --watch --env-file=.env server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasKoob/eCommerce-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThomasKoob/eCommerce-API/issues"
+  },
+  "homepage": "https://github.com/ThomasKoob/eCommerce-API#readme",
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.6.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7"
+  }
+}
