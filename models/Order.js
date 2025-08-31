@@ -1,22 +1,14 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db/index.js';
 
-const products = {producId, quantity}
-
 const Order = sequelize.define('Order', {
-  userID: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+  userId: { type: DataTypes.INTEGER, allowNull: false },
+  products: { 
+    type: DataTypes.JSON, // [{ productId, quantity }]
+    allowNull: false 
   },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  total: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  
-  },
+  total: { type: DataTypes.FLOAT, allowNull: false }
 });
 
-export default Product;
+export default Order;
+
