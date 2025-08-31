@@ -1,0 +1,12 @@
+[
+  { "name": "Smartphone", "description": "Latest 5G smartphone", "price": 699.99, "categoryId": 1 },
+  { "name": "Laptop", "description": "High-performance laptop", "price": 1199.99, "categoryId": 3 },
+  { "name": "Wireless Mouse", "description": "Ergonomic wireless mouse", "price": 29.99, "categoryId": 4 },
+  { "name": "Mechanical Keyboard", "description": "RGB gaming keyboard", "price": 89.99, "categoryId": 4 },
+  { "name": "Antivirus Software", "description": "Complete protection suite", "price": 49.99, "categoryId": 2 },
+  { "name": "Operating System", "description": "Latest OS version", "price": 139.99, "categoryId": 2 },
+  { "name": "Graphics Card", "description": "High-end GPU for gaming", "price": 499.99, "categoryId": 5 },
+  { "name": "Processor", "description": "Multi-core CPU", "price": 299.99, "categoryId": 5 },
+  { "name": "Tablet", "description": "Lightweight 10-inch tablet", "price": 349.99, "categoryId": 1 },
+  { "name": "Headphones", "description": "Noise-cancelling headphones", "price": 149.99, "categoryId": 4 }
+]

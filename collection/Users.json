@@ -1,0 +1,22 @@
+[
+  { "name": "Alice", "email": "alice@example.com", "password": "password1" },
+  { "name": "Bob", "email": "bob@example.com", "password": "password2" },
+  { "name": "Charlie", "email": "charlie@example.com", "password": "password3" },
+  { "name": "Diana", "email": "diana@example.com", "password": "password4" },
+  { "name": "Ethan", "email": "ethan@example.com", "password": "password5" },
+  { "name": "Fiona", "email": "fiona@example.com", "password": "password6" },
+  { "name": "George", "email": "george@example.com", "password": "password7" },
+  { "name": "Hannah", "email": "hannah@example.com", "password": "password8" },
+  { "name": "Ivan", "email": "ivan@example.com", "password": "password9" },
+  { "name": "Julia", "email": "julia@example.com", "password": "password10" },
+  { "name": "Kevin", "email": "kevin@example.com", "password": "password11" },
+  { "name": "Laura", "email": "laura@example.com", "password": "password12" },
+  { "name": "Michael", "email": "michael@example.com", "password": "password13" },
+  { "name": "Nina", "email": "nina@example.com", "password": "password14" },
+  { "name": "Oscar", "email": "oscar@example.com", "password": "password15" },
+  { "name": "Paula", "email": "paula@example.com", "password": "password16" },
+  { "name": "Quentin", "email": "quentin@example.com", "password": "password17" },
+  { "name": "Rita", "email": "rita@example.com", "password": "password18" },
+  { "name": "Steve", "email": "steve@example.com", "password": "password19" },
+  { "name": "Tina", "email": "tina@example.com", "password": "password20" }
+]
