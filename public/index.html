@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><title>Mini Shop</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;margin:16px}
+  .b{border:1px solid #999;border-radius:8px;padding:8px;margin:8px 0}
+  button,input{padding:6px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start}
+  .item{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed #ddd}
+</style>
+</head>
+<body>
+<h1>Mini Shop</h1>
+
+<div class="row">
+  <div class="b">
+    <div><label>Name: <input id="name"></label></div>
+    <div><label>Email: <input id="email" type="email"></label></div>
+    <div><label>Password: <input id="pw" type="password"></label></div>
+  </div>
+  <div class="b">
+    <button id="signup">Sign up</button>
+    <div id="uinfo"><small>No User.</small></div>
+  </div>
+</div>
+
+<h2>Our Products</h2>
+<div id="products" class="b">Loading…</div>
+
+<h2>Cart</h2>
+<div class="row">
+  <div class="b" style="flex:1;min-width:240px">
+    <div id="cart"><small>Empty</small></div>
+    <div style="text-align:right;margin-top:6px">Total: <b id="sum">0.00€</b></div>
+  </div>
+  <div class="b"><button id="order" disabled>Order</button></div>
+</div>
+
+<script>
+  const getById = id => document.getElementById(id);
+  let currentUserId = null;
+  const cart = new Map();            // productId -> { product, qty }
+
+  // create User
+  getById("signup").onclick = async () => {
+    const body = {
+      name: getById("name").value,
+      email: getById("email").value,
+      password: getById("pw").value
+    };
+    const response = await fetch("/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const data = await response.json();
+    if (!response.ok) return alert(data.message || "Fehler");
+    currentUserId = data.id;
+    getById("uinfo").innerHTML = `<small>User: <b>${data.name}</b> (id ${data.id})</small>`;
+    document.querySelectorAll("[data-add]").forEach(button => button.disabled = false);
+    toggleOrderBtn();
+  };
+
+  // loading Products
+  (async () => {
+    const response = await fetch("/products");
+    const productList = await response.json();
+    const productsContainer = getById("products"); 
+    productsContainer.innerHTML = "";
+    productsContainer.onclick = event => {
+      const productId = event.target?.dataset?.add;
+      if (!productId || !currentUserId) return;
+      const product = productList.find(x => x.id == productId);
+      const row = cart.get(product.id) || { product, qty: 0 };
+      row.qty++;
+      cart.set(product.id, row);
+      renderCart();
+    };
+    productList.forEach(product => {
+      const element = document.createElement("div");
+      element.className = "item";
+      element.innerHTML = `
+        <span>${product.name} (${product.price.toFixed(2)}€)</span>
+        <button data-add="${product.id}" disabled>Cart</button>`;
+      productsContainer.appendChild(element);
+    });
+  })();
+
+  // Cart
+  function renderCart() {
+    const cartBox = getById("cart"); 
+    cartBox.innerHTML = "";
+    let sum = 0;
+    if (!cart.size) cartBox.innerHTML = "<small>Empty</small>";
+    cart.forEach(({ product, qty }, id) => {
+      sum += product.price * qty;
+      const row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML = `<span>${product.name} × ${qty}</span>`;
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "−";
+      removeButton.onclick = () => {
+        qty--;
+        if (qty <= 0) cart.delete(id); 
+        else cart.set(id, { product, qty });
+        renderCart();
+      };
+      row.appendChild(removeButton);
+      cartBox.appendChild(row);
+    });
+    getById("sum").textContent = sum.toFixed(2) + "€";
+    toggleOrderBtn();
+  }
+
+  // Order
+  getById("order").onclick = async () => {
+    if (!currentUserId || !cart.size) return;
+    const products = [...cart.values()].map(({ product, qty }) => ({
+      productId: product.id, quantity: qty
+    }));
+    const response = await fetch("/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: currentUserId, products })
+    });
+    const data = await response.json();
+    if (!response.ok) return alert(data.message || "Fehler bei Order");
+    alert(`Order OK (id ${data.id}) Total: ${data.total.toFixed(2)}€`);
+    cart.clear(); renderCart();
+  };
+
+  const toggleOrderBtn = () => {
+    getById("order").disabled = !currentUserId || !cart.size;
+  };
+</script>
+</body>
+</html>
